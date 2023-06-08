@@ -1,0 +1,41 @@
+In this kata you are given a string for example:
+
+"example(unwanted thing)example"
+Your task is to remove everything inside the parentheses as well as the parentheses themselves.
+
+The example above would return:
+
+"exampleexample"
+Notes
+Other than parentheses only letters and spaces can occur in the string. Don't worry about other brackets like "[]" and "{}" as these will never appear.
+There can be multiple parentheses.
+The parentheses can be nested.
+
+def remove_parentheses(s):
+    ss = ''
+    count = 0
+    k = 0
+    prev = None
+    for i, v in enumerate(s):
+        if v == '(':
+            if prev != v:
+                ss += s[k:i]
+                prev = v
+            count += 1
+        if v == ')':
+            count -=1
+            if count == 0:
+                prev = None
+                k = i + 1
+    ss = ss + s[k:]
+    return ss
+    
+# also
+
+def remove_parentheses(s):
+    lvl,out = 0,[]
+    for c in s:
+        lvl += c=='('
+        if not lvl: out.append(c)
+        lvl -= c==')'    
+    return ''.join(out)
