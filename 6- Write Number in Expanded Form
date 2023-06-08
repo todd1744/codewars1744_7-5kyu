@@ -1,0 +1,43 @@
+Write Number in Expanded Form
+You will be given a number and you will need to return it as a string in Expanded Form. For example:
+
+expanded_form(12) # Should return '10 + 2'
+expanded_form(42) # Should return '40 + 2'
+expanded_form(70304) # Should return '70000 + 300 + 4'
+NOTE: All numbers will be whole numbers greater than 0.
+If you liked this kata, check out part 2!!
+
+WHAT I WAS DOING HERE
+
+def expanded_form(num):
+    
+    def count_digit(num):
+        digits = 0
+        while num > 0:
+            num = num // 10
+            digits += 1
+        return digits
+    
+    expanded_ints0 = []
+    power = 1
+    
+    while num not in expanded_ints0:
+        expanded_ints0.append(num % 10**power)
+        power += 1
+    
+    expanded_ints0 = reversed(list(dict.fromkeys(expanded_ints0)))
+    expanded_ints = []
+    
+    for i in expanded_ints0:
+        exp_i = i // 10**(count_digit(i) - 1) * 10**(count_digit(i) - 1)
+        [expanded_ints.append(exp_i) if exp_i > 0 else None]
+
+    expanded_strings = [str(i) for i in expanded_ints]
+    
+    return ' + '.join(expanded_strings)
+
+# also
+
+def expanded_form(num):
+    num = list(str(num))
+    return ' + '.join(x + '0' * (len(num) - y - 1) for y,x in enumerate(num) if x != '0')
